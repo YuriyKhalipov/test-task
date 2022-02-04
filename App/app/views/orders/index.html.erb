@@ -1,0 +1,65 @@
+<style>
+  .layer1 {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: -3%; /* Отступ сверху */
+    padding: 10px;
+  }
+  .layer3 {
+    padding: 10px; /* Поля вокруг текста */
+  }
+</style>
+
+<div class="layer3"><font size="3">
+  <div align="right"><%= image_tag current_user.avatar.url if current_user.avatar? %><span><%= link_to "#{current_user.last_name} #{current_user.first_name} #{current_user.patronymic}", edit_user_registration_path %></span>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete%><font size="3">
+  </div>
+</div>
+
+<div class="layer1">
+  <%= button_to "Home", new_order_path, method: :get%>
+  <font size="4"><h1>My orders</h1><font size="4">
+
+<font size="3"><table>
+  <tr>  
+    <th><%= button_to "Date ▲", orders_path, method: :get, params: { :sort => "1"}%></th>
+    <th><%= button_to "Price ▲", orders_path, method: :get, params: { :sort => "3"}%></th>
+    <th><%= button_to "Distance ▲", orders_path, method: :get, params: { :sort => "5"}%></th>
+  </tr>
+
+   <tr>  
+    <th><%= button_to "Date ▼", orders_path, method: :get, params: { :sort => "2"}%></th>
+    <th><%= button_to "Price ▼", orders_path, method: :get, params: { :sort => "4"}%></th>
+    <th><%= button_to "Distance ▼", orders_path, method: :get, params: { :sort => "6"}%></th>
+  </tr>
+
+  <tr>
+    <th>ID </th>
+    <th>Length(cm) </th>
+    <th>Width(cm) </th>
+    <th>Height(cm) </th>
+    <th>Distance </th>
+    <th>Origin location </th>
+    <th>Destination location </th>
+    <th>Price </th>
+    <th>Created at </th>
+    <th>Status </th>
+  </tr>
+ <% @orders.each do |order| %>
+  <tr>
+    <td><%= order.id%></td> 
+    <td><%= order.length%></td>
+    <td><%=order.width %></td>
+    <td><%=order.height %></td>
+    <td><%=order.distance %></td>
+    <td><%=order.origin_location %></td>
+    <td><%=order.destination_location %></td>
+    <td><%=order.price %></td>
+    <td><%=order.created_at %></td>
+    <td><%=order.aasm_state %></td>
+    <td><%= link_to "Open", order%> </td>
+  </tr>
+  <% end %>
+  </table>
+  <%= paginate @orders %>
+</font></div>
