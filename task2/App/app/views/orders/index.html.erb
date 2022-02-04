@@ -1,0 +1,8 @@
+<h1> Order </h1>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+    <%= button_to 'Show my order', new_order_path(msg), method: :get %>
+  </div>
+<% end %>
